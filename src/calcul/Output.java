@@ -25,5 +25,9 @@ public class Output// extends ArrayList<Output.Paire>
 
 
     public record Paire(int i, int j) {
+        @Override
+        public String toString() {
+            return "(" + i + "," + j + ')';
+        }
     }
 }

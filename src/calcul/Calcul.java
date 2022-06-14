@@ -12,13 +12,13 @@ public class Calcul //extends TreeMap<Integer, Output>
 
 
     static final String filename = "C:\\Users\\gille\\IdeaProjects\\" +
-            "Nombre_5.5 - Copie\\src\\M_";
+            "Nombre_6.5\\src\\M_";
     static final TreeMap<Integer, Output> T = new TreeMap<>();
     int entiermax;
     Stream<Integer> stream = T.keySet().stream();
 
     public Calcul() {
-        entiermax = 64;
+        entiermax = 32;
         rangeClosed(2, entiermax).forEach(i ->
                 rangeClosed(2, entiermax).forEach(j ->
                         {
