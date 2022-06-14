@@ -1,5 +1,6 @@
 package calcul;
 
+import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
@@ -7,7 +8,7 @@ import static calcul.Output.Paire;
 import static calcul.ReadWriteFile.writeTextToFile;
 import static java.util.stream.IntStream.rangeClosed;
 
-public class Calcul //extends TreeMap<Integer, Output>
+public class Calcul
 {
 
 
@@ -28,7 +29,9 @@ public class Calcul //extends TreeMap<Integer, Output>
                                 T.get(produit).m += 1;
                                 T.get(produit).L.add(p);
                             } else {
-                                T.put(produit, new Output(p, 1));
+                                ArrayList<Paire> L= new ArrayList<>();L.add(p);
+
+                                T.put(produit, new Output(p, 1 ,L  ));
                             }
                         }
                 )
