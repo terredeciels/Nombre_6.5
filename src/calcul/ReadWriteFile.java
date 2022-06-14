@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.Scanner;
 
 public class ReadWriteFile {
-    ///home/me/Documents/ToWindows/matrix1.txt
 
     public static String readFromFile(String fileaddr) throws FileNotFoundException {
         StringBuilder ret = new StringBuilder();
