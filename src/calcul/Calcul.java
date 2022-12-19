@@ -3,7 +3,6 @@ package calcul;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import static calcul.Calcul.Output.Paire;
 import static ext.ReadWriteFile.writeTextToFile;
@@ -20,33 +19,35 @@ public class Calcul {
     private static String[][] Ts;
 
     static void calcul() {
-        entiermax = 20;
+
         rangeClosed(2, entiermax).forEach(i ->
-                rangeClosed(2, entiermax).forEach(j ->{
-                        if (i<=j){
-                        {
-                            int produit = i * j;
-                            Paire p = new Paire(i, j);
-                            if (T.containsKey(produit)) {
-                                T.get(produit).m += 1;
-                                T.get(produit).L.add(p);
-                            } else {
-                                ArrayList<Paire> L = new ArrayList<>();
-                                L.add(p);
-                                T.put(produit, new Output(p, 1, L));
+                rangeClosed(2, entiermax).forEach(j -> {
+                            if (i <= j) {
+                                {
+                                    int produit = i * j;
+                                    Paire p = new Paire(i, j);
+                                    if (T.containsKey(produit)) {
+                                        T.get(produit).m += 1;
+                                        T.get(produit).L.add(p);
+                                    } else {
+                                        ArrayList<Paire> L = new ArrayList<>();
+                                        L.add(p);
+                                        T.put(produit, new Output(p, 1, L));
+                                    }
+                                }
                             }
-                        }}}
+                        }
                 )
         );
         tab = new Integer[entiermax + 1][entiermax + 1];
         T.keySet().stream().map(T::get).forEach(O -> O.L.forEach(p -> tab[p.i()][p.j()] = O.m));
-       // writeTextToFile(tab, filename, entiermax);
+        // writeTextToFile(tab, filename, entiermax);
         // System.out.println(T);
 
     }
 
     static void calculFormel() {
-        entiermax = 64;
+
         Ts = new String[entiermax + 1][entiermax + 1];
         rangeClosed(2, entiermax).forEach(i ->
                 rangeClosed(2, entiermax).forEach(j ->
@@ -57,10 +58,11 @@ public class Calcul {
                 )
         );
 
-        writeTextToFile(Ts, filename, entiermax);
+        // writeTextToFile(Ts, filename, entiermax);
     }
 
     public static void main(String[] args) {
+        entiermax = 20;
         calcul();
         calculFormel();
         StringBuilder Sb = new StringBuilder();
@@ -68,15 +70,17 @@ public class Calcul {
             for (Paire p : O.L) {
                 int i = p.i();
                 int j = p.j();
-              if (O.m!=1)  Sb.append(Ts[i][j]).append(" = ");
+                if (O.m != 1)
+                    Sb.append(Ts[i][j]).append(" = ");
             }
 
-            if (O.m!=1){
-                Sb.delete(Sb.length()-3,Sb.length());
-                Sb.append("\n");}
+            if (O.m != 1) {
+                Sb.delete(Sb.length() - 3, Sb.length());
+                Sb.append("\n");
+            }
         });
         System.out.println(Sb);
-
+        writeTextToFile(String.valueOf(Sb), filename, entiermax);
     }
 
     public static class Output {

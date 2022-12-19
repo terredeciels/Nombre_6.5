@@ -46,6 +46,17 @@ public class ReadWriteFile {
             System.out.println("error " + ioe);
         }
     }
+    public static void writeTextToFile(String texttowrite, String fileaddr, int n) {
+        try {
+            FileWriter fw = new FileWriter(fileaddr+ n + ".txt", false);
+            BufferedWriter output = new BufferedWriter(fw);
+            output.write(texttowrite);
+            output.flush();
+            output.close();
+        } catch (IOException ioe) {
+            System.out.println("error " + ioe);
+        }
+    }
 
 
 }
