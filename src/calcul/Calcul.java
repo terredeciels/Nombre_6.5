@@ -6,21 +6,24 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import static calcul.Calcul.Output.Paire;
-import static calcul.ReadWriteFile.writeTextToFile;
+import static ext.ReadWriteFile.writeTextToFile;
 import static java.util.stream.IntStream.rangeClosed;
 
 public class Calcul {
 
-    static final String filename = "C:\\Users\\gille\\IdeaProjects\\" +
-            "Nombre_6.5\\src\\M_";
+    static final String filename = "/Users/gilles/Downloads/";
     static final TreeMap<Integer, Output> T = new TreeMap<>();
-    int entiermax;
-    Stream<Integer> stream = T.keySet().stream();
 
-    public Calcul() {
-        entiermax = 64;
+    static int entiermax;
+
+    private static Integer[][] tab;
+    private static String[][] Ts;
+
+    static void calcul() {
+        entiermax = 20;
         rangeClosed(2, entiermax).forEach(i ->
-                rangeClosed(2, entiermax).forEach(j ->
+                rangeClosed(2, entiermax).forEach(j ->{
+                        if (i<=j){
                         {
                             int produit = i * j;
                             Paire p = new Paire(i, j);
@@ -30,20 +33,50 @@ public class Calcul {
                             } else {
                                 ArrayList<Paire> L = new ArrayList<>();
                                 L.add(p);
-
                                 T.put(produit, new Output(p, 1, L));
                             }
+                        }}}
+                )
+        );
+        tab = new Integer[entiermax + 1][entiermax + 1];
+        T.keySet().stream().map(T::get).forEach(O -> O.L.forEach(p -> tab[p.i()][p.j()] = O.m));
+       // writeTextToFile(tab, filename, entiermax);
+        // System.out.println(T);
+
+    }
+
+    static void calculFormel() {
+        entiermax = 64;
+        Ts = new String[entiermax + 1][entiermax + 1];
+        rangeClosed(2, entiermax).forEach(i ->
+                rangeClosed(2, entiermax).forEach(j ->
+                        {
+                            String produitS = "a" + i + "." + "a" + j;
+                            Ts[i][j] = produitS;
                         }
                 )
         );
-        Integer[][] tab = new Integer[entiermax + 1][entiermax + 1];
-        stream.map(T::get).forEach(O -> O.L.forEach(p -> tab[p.i()][p.j()] = O.m));
-        writeTextToFile(tab, filename, entiermax);
-        // System.out.println(T);
+
+        writeTextToFile(Ts, filename, entiermax);
     }
 
     public static void main(String[] args) {
-        new Calcul();
+        calcul();
+        calculFormel();
+        StringBuilder Sb = new StringBuilder();
+        T.keySet().stream().map(T::get).forEach(O -> {
+            for (Paire p : O.L) {
+                int i = p.i();
+                int j = p.j();
+              if (O.m!=1)  Sb.append(Ts[i][j]).append(" = ");
+            }
+
+            if (O.m!=1){
+                Sb.delete(Sb.length()-3,Sb.length());
+                Sb.append("\n");}
+        });
+        System.out.println(Sb);
+
     }
 
     public static class Output {
@@ -57,17 +90,8 @@ public class Calcul {
             this.m = m;
         }
 
-        //    @Override
-//    public String toString() {
-//        StringBuilder ret = new StringBuilder();
-//        for (Paire value : L) ret.append(value);
-//        return "(" + m + ")" + "  " + ret + "\n";
-//    }
+
         public record Paire(int i, int j) {
-//        @Override
-//        public String toString() {
-//            return "(" + i + "," + j + ')';
-//        }
         }
     }
 }

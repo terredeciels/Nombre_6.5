@@ -1,4 +1,4 @@
-package calcul;
+package ext;
 
 import java.io.*;
 import java.util.Scanner;
@@ -25,7 +25,16 @@ public class ReadWriteFile {
         }
         writeTextToFile(ret.toString(), fileaddr + n + ".txt");
     }
-
+    public static void writeTextToFile(String[][] tab, String fileaddr, int n) {
+        StringBuilder ret = new StringBuilder();
+        for (int i = 2; i <= n; i++) {
+            for (int j = 2; j <= n; j++) {
+                ret.append(tab[i][j]).append(",");
+            }
+            ret.append("\n");
+        }
+        writeTextToFile(ret.toString(), fileaddr + n + ".txt");
+    }
     public static void writeTextToFile(String texttowrite, String fileaddr) {
         try {
             FileWriter fw = new FileWriter(fileaddr, false);
